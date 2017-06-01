@@ -11,8 +11,8 @@ public class PointServiceImpl implements PointService {
 
     private Map<Integer, List<Point>> table = new TreeMap<>();
 
+    @Override
     public boolean add(Point point) {
-
         List<Point> points = table.getOrDefault(point.getX(), new ArrayList<>());
         table.put(point.getX(), points);
         if (!points.contains(point)) {
@@ -21,6 +21,16 @@ public class PointServiceImpl implements PointService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean addAll(List<Point> points) {
+
+        removeAll();
+        for (Point point : points) {
+            add(point);
+        }
+        return true;
     }
 
     @Override

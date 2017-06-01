@@ -6,6 +6,8 @@ public interface PointService {
 
     boolean add(Point point);
     
+    boolean addAll(List<Point> points);
+    
     boolean remove(Point point);
 
     int size();

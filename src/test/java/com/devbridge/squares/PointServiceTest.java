@@ -55,6 +55,19 @@ public class PointServiceTest {
     }
 
     @Test
+    public void testAddAllPoints() {
+
+        List<Point> points = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            points.add(new Point(i, (int) (Math.random() * 10)));
+        }
+        boolean added = service.addAll(points);
+
+        assertTrue(added);
+        assertEquals(10, service.size());
+    }
+
+    @Test
     public void testRemovePoint() {
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_2));
         boolean removed = service.remove(new Point(X_VALUE_NEG_2, Y_VALUE_2));
@@ -78,13 +91,13 @@ public class PointServiceTest {
     public void testCalculateSquares() {
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_2));
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_1));
-        
+
         service.add(new Point(X_VALUE_NEG_1, Y_VALUE_1));
         service.add(new Point(X_VALUE_NEG_1, Y_VALUE_2));
 
         service.add(new Point(X_VALUE_1, Y_VALUE_2));
         service.add(new Point(X_VALUE_1, Y_VALUE_1));
-        
+
         service.add(new Point(X_VALUE_0, Y_VALUE_1));
         service.add(new Point(X_VALUE_0, Y_VALUE_2));
 
@@ -94,54 +107,54 @@ public class PointServiceTest {
 
         service.add(new Point(X_VALUE_NEG_1, Y_VALUE_0));
         service.add(new Point(X_VALUE_NEG_1, Y_VALUE_NEG_2));
-        
+
         service.add(new Point(X_VALUE_1, Y_VALUE_0));
         service.add(new Point(X_VALUE_1, Y_VALUE_NEG_2));
-        
+
         List<Square> squares = service.calculateSquares();
 
         squares.forEach(square -> System.out.println(square));
 
         assertEquals(7, squares.size());
     }
-    
+
     @Test
     public void testCalculateFullGridSquares() {
-        
+
         // 27
-        
+
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_2));
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_1));
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_0));
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_NEG_1));
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_NEG_2));
-        
+
         service.add(new Point(X_VALUE_NEG_1, Y_VALUE_2));
         service.add(new Point(X_VALUE_NEG_1, Y_VALUE_1));
         service.add(new Point(X_VALUE_NEG_1, Y_VALUE_0));
         service.add(new Point(X_VALUE_NEG_1, Y_VALUE_NEG_1));
         service.add(new Point(X_VALUE_NEG_1, Y_VALUE_NEG_2));
-        
+
         service.add(new Point(X_VALUE_0, Y_VALUE_2));
         service.add(new Point(X_VALUE_0, Y_VALUE_1));
         service.add(new Point(X_VALUE_0, Y_VALUE_0));
         service.add(new Point(X_VALUE_0, Y_VALUE_NEG_1));
         service.add(new Point(X_VALUE_0, Y_VALUE_NEG_2));
-        
+
         service.add(new Point(X_VALUE_1, Y_VALUE_2));
         service.add(new Point(X_VALUE_1, Y_VALUE_1));
         service.add(new Point(X_VALUE_1, Y_VALUE_0));
         service.add(new Point(X_VALUE_1, Y_VALUE_NEG_1));
         service.add(new Point(X_VALUE_1, Y_VALUE_NEG_2));
-        
+
         service.add(new Point(X_VALUE_2, Y_VALUE_2));
         service.add(new Point(X_VALUE_2, Y_VALUE_1));
         service.add(new Point(X_VALUE_2, Y_VALUE_0));
         service.add(new Point(X_VALUE_2, Y_VALUE_NEG_1));
         service.add(new Point(X_VALUE_2, Y_VALUE_NEG_2));
-        
+
         List<Square> squares = service.calculateSquares();
-        
+
         assertEquals(30, squares.size());
     }
 
