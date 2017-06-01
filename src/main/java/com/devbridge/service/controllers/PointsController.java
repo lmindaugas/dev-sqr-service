@@ -16,32 +16,32 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.devbridge.squares.Point;
 import com.devbridge.squares.PointService;
 import com.devbridge.squares.PointServiceImpl;
+import com.devbridge.squares.ValidationService;
+import com.devbridge.squares.ValidationServiceImpl;
 
 @CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3002" })
 @RestController
 public class PointsController {
 
-    PointService service;
+    // make injectable
+    PointService service = new PointServiceImpl();
 
     public PointsController() {
-        
-        // make injectable
-        this.service = new PointServiceImpl();
-        
+
         // dummy data
-        ArrayList<Point> points = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
-            points.add(new Point((int) (Math.random() * 10), (int) (Math.random() * 10)));
-        }
-        service.add(points);
+        // ArrayList<Point> points = new ArrayList<>();
+        // for (int i = 0; i < 10; i++) {
+        // points.add(new Point((int) (Math.random() * 10), (int) (Math.random() * 10)));
+        // }
+        // service.addAll(points);
     }
 
     @GetMapping("/points")
     public List<Point> getPoints() {
 
-        System.out.println("=== get the points ===" + points);
+        System.out.println("=== get the points ===" + service.getPoints());
 
-        return points;
+        return service.getPoints();
     }
 
     @PutMapping("/add")
@@ -49,7 +49,7 @@ public class PointsController {
 
         System.out.println("=== add a point: (" + x + ", " + y + ") ===");
 
-        points.add(new Point(x, y));
+        service.add(new Point(x, y));
     }
 
     @DeleteMapping("/delete")
@@ -57,7 +57,15 @@ public class PointsController {
 
         System.out.println("=== Delete all the points ===");
 
-        points.clear();
+        service.clear();
+    }
+
+    @DeleteMapping("/remove")
+    public void removePoint(@RequestParam("x") int x, @RequestParam("y") int y) {
+
+        System.out.println("=== remove a point: (" + x + ", " + y + ") ===");
+
+        service.remove(new Point(x, y));
     }
 
     @PutMapping("/upload")
@@ -69,11 +77,20 @@ public class PointsController {
         }
 
         try {
-            System.out.println("=== Uplaod the points ===");
+            System.out.println("=== Upload the points ===");
 
             String f = new String(file.getBytes());
             List<String> parts = Arrays.asList(f.split("[\n]"));
-            parts.forEach(part -> System.out.println("points: " + part));
+
+            parts.forEach(point -> {
+                try {
+                    service.add(new Point(point));
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+            });
+
+            System.out.println("total: " + service.size() + " points have been uploaded");
 
             redirectAttributes.addFlashAttribute("message", "File has been successfully uploaded");
         } catch (Exception e) {

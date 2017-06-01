@@ -2,10 +2,12 @@ package com.devbridge.squares;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class PointServiceImpl implements PointService {
 
@@ -26,7 +28,7 @@ public class PointServiceImpl implements PointService {
     @Override
     public boolean addAll(List<Point> points) {
 
-        removeAll();
+        clear();
         for (Point point : points) {
             add(point);
         }
@@ -44,7 +46,7 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public void removeAll() {
+    public void clear() {
         table.clear();
     }
 
@@ -79,6 +81,13 @@ public class PointServiceImpl implements PointService {
 
     private int calculateDistance(Point pt1, Point pt2) {
         return (int) Math.sqrt(Math.pow(pt2.getX() - pt1.getX(), 2) + Math.pow(pt2.getY() - pt1.getY(), 2));
+    }
+
+    @Override
+    public List<Point> getPoints() {
+        // make immutable
+        return table.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+
     }
 
 }

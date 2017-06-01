@@ -12,7 +12,9 @@ public interface PointService {
 
     int size();
 
-    void removeAll();
+    void clear();
 
     List<Square> calculateSquares();
+
+    List<Point> getPoints();
 }

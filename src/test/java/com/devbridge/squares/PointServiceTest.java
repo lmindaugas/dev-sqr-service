@@ -68,23 +68,31 @@ public class PointServiceTest {
     }
 
     @Test
-    public void testRemovePoint() {
+    public void testRemovePointByPoint() {
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_2));
         boolean removed = service.remove(new Point(X_VALUE_NEG_2, Y_VALUE_2));
 
         assertTrue(removed);
+        assertEquals(0, service.size());
     }
-
+    
     @Test
-    public void testRemoveAllPoints() {
+    public void testClearAllPoints() {
 
+        service.add(new Point(X_VALUE_NEG_2, Y_VALUE_2));        
+
+        service.clear();
+        assertTrue(service.size() == 0);
+    }
+    
+    @Test
+    public void testGetPoints(){
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_2));
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_3));
         service.add(new Point(X_VALUE_NEG_2, Y_VALUE_4));
-
-        service.removeAll();
-
-        assertTrue(service.size() == 0);
+        
+        List<Point> points = service.getPoints();
+        assertTrue(points.size() == 3);
     }
 
     @Test

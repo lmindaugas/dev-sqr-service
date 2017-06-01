@@ -10,13 +10,27 @@ public class Point {
             this.x = Integer.parseInt(x);
             this.y = Integer.parseInt(y);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Incorrect point format");
+            throw new IllegalArgumentException("Incorrect point type");
         }
     }
 
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Point(String point) {
+        String[] parts = point.trim().split("\\s");
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("Point consists of two numbers");
+        }
+
+        try {
+            this.x = Integer.parseInt(parts[0]);
+            this.y = Integer.parseInt(parts[1]);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Incorrect point type: " + point);
+        }
     }
 
     public int getX() {
