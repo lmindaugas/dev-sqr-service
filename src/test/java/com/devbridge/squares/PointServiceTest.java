@@ -61,7 +61,7 @@ public class PointServiceTest {
         for (int i = 0; i < 10; i++) {
             points.add(new Point(i, (int) (Math.random() * 10)));
         }
-        boolean added = service.addAll(points);
+        boolean added = service.replace(points);
 
         assertTrue(added);
         assertEquals(10, service.size());

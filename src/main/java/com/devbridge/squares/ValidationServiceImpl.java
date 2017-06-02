@@ -1,5 +1,8 @@
 package com.devbridge.squares;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ValidationServiceImpl implements ValidationService {
 
     private static final int MIN_RANGE_VALUE = -5000;

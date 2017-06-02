@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PointServiceImpl implements PointService {
 
     private Map<Integer, List<Point>> table = new TreeMap<>();
@@ -26,7 +29,7 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public boolean addAll(List<Point> points) {
+    public boolean replace(List<Point> points) {
 
         clear();
         for (Point point : points) {
@@ -85,9 +88,7 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public List<Point> getPoints() {
-        // make immutable
         return table.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
-
     }
 
 }
